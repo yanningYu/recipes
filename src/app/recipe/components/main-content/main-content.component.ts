@@ -47,11 +47,6 @@ export class MainContentComponent implements OnInit {
     }
   }
 
-  update = () => {
-    this.showNotification = false;
-    this.recipeService.updateRecipeSwitch = true;
-  }
-
   toggleFavoriteFood = (recipe: IRecipe) => {
     recipe.isFavorite = !recipe.isFavorite;
   }

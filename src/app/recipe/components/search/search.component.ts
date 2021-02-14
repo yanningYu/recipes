@@ -26,6 +26,7 @@ export class SearchComponent {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   @Output() searchClick = new EventEmitter<string>();
+  @Input() showNotification: boolean;
   title = '';
   constructor() {
     this.filteredIngredients = this.ingredientCtrl.valueChanges.pipe(
@@ -65,6 +66,19 @@ export class SearchComponent {
   }
 
   search = () => {
+    this.searchCodition();
+  }
+
+  update = () => {
+    this.searchCodition()
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allIngredients.filter(ingredient => ingredient.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private searchCodition = (forceUpdate: boolean = false) => {
     const pre = '/?';
     this.title = this.title.trim();
     let filterCourse = '';
@@ -78,14 +92,9 @@ export class SearchComponent {
     }
 
     if (filterCourse || strIntegredient) {
-      this.searchClick.emit(pre + strIntegredient + filterCourse);
+      this.searchClick.emit(pre + strIntegredient + filterCourse );
     } else {
       this.searchClick.emit('');
     }
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allIngredients.filter(ingredient => ingredient.toLowerCase().indexOf(filterValue) === 0);
   }
 }

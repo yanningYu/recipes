@@ -5,3 +5,35 @@
 section {
   display: table;
 }
+
+
+.notification {
+  top: 0;
+  left: 10px;
+  right: 10px;
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  padding: 10px 15px;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: 'Roboto';
+  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+
+  &.visible {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+
+  span {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bolder
+  }
+
+  button {
+    margin-left: 10px;
+  }
+}
