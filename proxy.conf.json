@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "http://www.recipepuppy.com/api",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

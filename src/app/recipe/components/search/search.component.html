@@ -1,0 +1,40 @@
+<mat-form-field class="ingredient-chip-list">
+  <mat-label>Favorite Ingredients</mat-label>
+  <mat-chip-list #chipList aria-label="Ingredients selection">
+    <mat-chip
+      *ngFor="let ingredient of ingredients"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(ingredient)"
+    >
+      {{ ingredient }}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="New ingredient..."
+      #ingredientInput
+      [formControl]="ingredientCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option
+      *ngFor="let ingredient of filteredIngredients | async"
+      [value]="ingredient"
+    >
+      {{ ingredient }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<mat-form-field appearance="fill" class="course-input">
+  <mat-label>Course</mat-label>
+  <input matInput [(ngModel)]='title'/>
+</mat-form-field>
+<section>
+  <div class="example-button-row">
+    <button mat-raised-button color="primary" (click)='search()'>Search</button>
+  </div>
+</section>

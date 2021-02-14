@@ -1,0 +1,26 @@
+<form>
+  <!-- put into one template in short future -->
+  <div class="notification" *ngIf="showNotification">
+    <span>There's new data available. Click to reload the data.</span>
+    <button mat-raised-button color="accent" (click)="update()">
+      <div class="flex-row">
+        <mat-icon>cached</mat-icon>
+        UPDATE
+      </div>
+    </button>
+  </div>
+
+  <main>
+    <app-search (searchClick)="search($event)"></app-search>
+    <mat-card *ngFor="let recipe of recipes$ | async">
+      <div class="recipe-content flex">
+        <span class="thumnail"><img [src]="recipe.thumbnail" [title]="recipe.title" /></span>
+        <span class="stretch">{{recipe.ingredients}} <a href="{{recipe.href}}" target="_blank" rel="noopener noreferrer">Details</a></span>
+
+        <button mat-icon-button>
+          <mat-icon [ngClass]="recipe.isFavorite ? 'heart': 'heart_outline' " aria-label="Like" (click)="toggleFavoriteFood(recipe)">favorite</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+  </main>
+</form>
