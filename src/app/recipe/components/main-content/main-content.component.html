@@ -4,8 +4,14 @@
       (searchClick)="search($event)"
       [showNotification]="showNotification"
     ></app-search>
-    <div *ngIf='recipes$ | async as recipes' data-cy="recipes">
-      <mat-card *ngFor="let recipe of recipes; let i=index">
+    <div
+      class="alert-danger"
+      *ngIf="errorMessage$ | async as errorMessage"
+    >
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="recipes$ | async as recipes" data-cy="recipes">
+      <mat-card *ngFor="let recipe of recipes; let i = index">
         <div class="recipe-content flex">
           <span class="thumnail"
             ><img style="height: 80px; width: 107px" [src]="recipe.thumbnail"
@@ -13,7 +19,7 @@
 
           <span class="stretch">
             <div>
-              <h2 attr.data-cy="title-{{i}}">{{ recipe.title }}</h2>
+              <h2 attr.data-cy="title-{{ i }}">{{ recipe.title }}</h2>
             </div>
             {{ recipe.ingredients }}
             <a

@@ -43,3 +43,10 @@ mat-card + mat-card {
   display: flex;
   flex-wrap: wrap;
 }
+
+.alert-danger{
+  color: red;
+  font-size: 16px;
+  margin-top: 20px;
+  font-weight: bolder;
+}

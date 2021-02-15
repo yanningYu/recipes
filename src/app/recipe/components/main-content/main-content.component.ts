@@ -1,6 +1,6 @@
-import { mergeMap, shareReplay, tap, filter, switchMap, takeUntil } from 'rxjs/operators';
+import { shareReplay, tap, switchMap, catchError } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, timer } from 'rxjs';
+import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { IRecipe } from '../../interfaces/i-recipe';
 import { RecipeService } from '../../services/recipe.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -24,8 +24,8 @@ export class MainContentComponent implements OnInit {
   expandedElement: IRecipe | null;
   recipes$: Observable<IRecipe[]>;
 
-  // private showNotificationSubject = new Subject<boolean>();
-  // showNotification$: Observable<boolean> = this.showNotificationSubject;
+  private errorMessageSubject = new Subject<string>();
+  errorMessage$ = this.errorMessageSubject.asObservable();
 
   showNotification = false;
   ngOnInit() {
@@ -36,6 +36,10 @@ export class MainContentComponent implements OnInit {
         }
       }),
       switchMap(() => this.recipeService.updatedrecipe$),
+      catchError(err => {
+        this.errorMessageSubject.next(err);
+        return EMPTY;
+      }),
       shareReplay(1));
   }
 
